@@ -72,6 +72,7 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
   private var mRootView: ConstraintLayout? = null
   private val mConstraintSet = ConstraintSet()
   private var mIsFilterVisible = false
+  private var color = ""
 
   @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +84,7 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     //intern
     val value = intent.extras
     val path = value?.getString("path")
+    color = value?.getString("color") as String
     val stickers =
       value?.getStringArrayList("stickers")?.plus(
         assets.list("Stickers")!!
@@ -119,6 +121,8 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
       .setPinchTextScalable(pinchTextScalable) // set flag to make text scalable when pinch
       .build() // build photo editor sdk
     mPhotoEditor?.setOnPhotoEditorListener(this)
+
+    // 默认选中线条绘制
     onToolSelected(ToolType.SHAPE)
 //    val drawable = Drawable.cre
 
@@ -199,7 +203,7 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     //SAVE
     val btnSave: TextView = findViewById(R.id.btnSave)
     btnSave.setOnClickListener(this)
-    btnSave.setTextColor(Color.BLACK)
+    btnSave.setTextColor(Color.WHITE)
 
     mPhotoEditorView = findViewById(R.id.photoEditorView)
     mTxtCurrentTool = findViewById(R.id.txtCurrentTool)
@@ -358,9 +362,15 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
       ToolType.SHAPE -> {
         mPhotoEditor!!.setBrushDrawingMode(true)
         mShapeBuilder = ShapeBuilder()
+
         mPhotoEditor!!.setShape(mShapeBuilder)
         mTxtCurrentTool!!.setText(R.string.label_shape)
-        mPhotoEditor!!.setShape(mShapeBuilder!!.withShapeSize(5.0f))
+        // 设置形状大小
+        mPhotoEditor!!.setShape(mShapeBuilder!!.withShapeSize(6.0f))
+        // 设置形状颜色为红色
+        var g = "green"
+        var colorCode: Int = if(color == g) -16711936 else -65536
+        mPhotoEditor!!.setShape(mShapeBuilder!!.withShapeColor(colorCode))
         // 关闭形状设置弹窗
         // showBottomSheetDialogFragment(mShapeBSFragment)
       }

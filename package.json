@@ -1,6 +1,6 @@
 {
   "name": "react-native-img-editor",
-  "version": "1.0.17",
+  "version": "1.0.20",
   "description": "image editor",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

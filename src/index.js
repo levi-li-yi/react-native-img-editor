@@ -1,3 +1,8 @@
+/*
+ * @Author: Levi Li
+ * @Date: 2023-12-04 11:53:23
+ * @description:
+ */
 import { NativeModules } from 'react-native';
 const { PhotoEditor } = NativeModules;
 
@@ -6,6 +11,7 @@ let exportObject = {};
 const defaultOptions = {
   path: '',
   stickers: [],
+  color: 'green',
 };
 
 exportObject = {

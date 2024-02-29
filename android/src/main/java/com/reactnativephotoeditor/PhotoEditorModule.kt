@@ -30,9 +30,11 @@ class PhotoEditorModule(reactContext: ReactApplicationContext) : ReactContextBas
     context.addActivityEventListener(mActivityEventListener)
 
     val path = options?.getString("path")
+    val color = options?.getString("color")
     val stickers = options?.getArray("stickers") as ReadableArray
 
     intent.putExtra("path", path)
+    intent.putExtra("color", color)
     intent.putExtra("stickers", stickers.toArrayList())
 
     activity.startActivityForResult(intent, EDIT_SUCCESSFUL)
